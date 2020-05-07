@@ -48,9 +48,6 @@ string get_encrypted(char in_alpha[], char in_key[], char in_phrase[])
         {
             for (int j = 0; j < 26; j++)
             {
-                //printf("Inphrase[%d]: %c\n", i, in_phrase[i]);
-                //printf("InAlpha[%d]: %c\n", i, in_alpha[j]);
-
                 if(tolower(in_phrase[i]) == tolower(in_alpha[j]))
                 {
                     if(islower(in_phrase[i]))
