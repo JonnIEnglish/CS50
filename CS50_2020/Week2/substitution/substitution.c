@@ -11,46 +11,50 @@ char check_key();
 int main(int argc, string argv[])
 {
 
-    if(argc != 2)
+    //checks that user entered an encryption key
+    if (argc != 2)    
     {
         printf("Usage: ./substitution key\n");
         return 1;
     } 
 
-    string stdalpha = "abcdefghijklmnopqrstuvwxyz";
-    string keyalpha = argv[1];
+    string alpha = "abcdefghijklmnopqrstuvwxyz";
+    string key = argv[1];
 
-    if (strlen(keyalpha) != 26)
+    //checks that user entered key is 26 letters
+    if (strlen(key) != 26)
     {
         printf("Usage: ./substitution key\n");
         return 1;
     }
-    if(check_key(stdalpha, keyalpha) == 'f')
+
+    //checks that user entered key conatains all letters in the alphabet
+    if (check_key(alpha, key) == 'f')
     {
         printf("Usage: ./substitution key\n");
         return 1;
     }
     
-    string plaintext = "HeLoo, BOI nono.";
+    //string plaintext = get_string("plaintext: ");
+    string plaintext = get_string("plaintext: ");
+    printf("ciphertext: ");
 
-    printf("Plaintext: %s\n", plaintext);
-    printf("Ciphertext: ");
-
-    get_encrypted(stdalpha, keyalpha, plaintext);
+    get_encrypted(alpha, key, plaintext);
 }
 
 
+//the function that encrypts the entered phrase using the entered key
 string get_encrypted(char in_alpha[], char in_key[], char in_phrase[])
 {
     for (int i = 0; in_phrase[i] != '\0'; i++)
     {
-        if(isalpha(in_phrase[i]))
+        if (isalpha(in_phrase[i]))
         {
             for (int j = 0; j < 26; j++)
             {
-                if(tolower(in_phrase[i]) == tolower(in_alpha[j]))
+                if (tolower(in_phrase[i]) == tolower(in_alpha[j]))
                 {
-                    if(islower(in_phrase[i]))
+                    if (islower(in_phrase[i]))
                     {
                         printf("%c", tolower(in_key[j]));
                     }
@@ -72,19 +76,25 @@ string get_encrypted(char in_alpha[], char in_key[], char in_phrase[])
     return in_phrase;
 }
 
-char check_key(string in_key, string in_alpha)
+
+char check_key(string in_alpha, string in_key)
 {
-    for(int i = 0; i < 26; i++)
+    char a;
+    char k;
+
+    for (int i = 0; i < 26; i++)
     {
         char temp = 'f';
-        for(int j = 0; j < 26; j++)
+        for (int j = 0; j < 26; j++)
         {
-            if(in_alpha[i] == in_key[j])
+            a = tolower(in_alpha[i]);
+            k = tolower(in_key[j]);
+            if (a == k)
             {
                 temp = 't';
             }
         }
-        if(temp == 'f')
+        if (temp == 'f')
         {
             return 'f';
         }
