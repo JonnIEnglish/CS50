@@ -16,11 +16,11 @@ int main(int argc, string argv[])
         printf("Usage: ./substitution key\n");
         return 1;
     } 
-    
+
     string stdalpha = "abcdefghijklmnopqrstuvwxyz";
     string keyalpha = argv[1];
 
-    if (strlen(argv[1]) != 26)
+    if (strlen(keyalpha) != 26)
     {
         printf("Usage: ./substitution key\n");
         return 1;
@@ -74,10 +74,10 @@ string get_encrypted(char in_alpha[], char in_key[], char in_phrase[])
 
 char check_key(string in_key, string in_alpha)
 {
-    for(int i = 0; i > 26; i++)
+    for(int i = 0; i < 26; i++)
     {
         char temp = 'f';
-        for(int j = 0; j > 26; j++)
+        for(int j = 0; j < 26; j++)
         {
             if(in_alpha[i] == in_key[j])
             {
