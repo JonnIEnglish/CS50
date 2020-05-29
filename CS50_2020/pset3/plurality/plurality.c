@@ -1,79 +1,84 @@
-#include <cs50.h>
+// Merge sort in C
+
 #include <stdio.h>
-#include <string.h>
 
-// Max number of candidates
-#define MAX 9
+// Merge two subarrays L and M into arr
+void merge(int arr[], int p, int q, int r) {
 
-// Candidates have name and vote count
-typedef struct
-{
-    string name;
-    int votes;
-}
-candidate;
+  // Create L ← A[p..q] and M ← A[q+1..r]
+  int n1 = q - p + 1;
+  int n2 = r - q;
 
-// Array of candidates
-candidate candidates[MAX];
+  int L[n1], M[n2];
 
-// Number of candidates
-int candidate_count;
+  for (int i = 0; i < n1; i++)
+    L[i] = arr[p + i];
+  for (int j = 0; j < n2; j++)
+    M[j] = arr[q + 1 + j];
 
-// Function prototypes
-bool vote(string name);
-void print_winner(void);
+  // Maintain current index of sub-arrays and main array
+  int i, j, k;
+  i = 0;
+  j = 0;
+  k = p;
 
-int main(int argc, string argv[])
-{
-    // Check for invalid usage
-    if (argc < 2)
-    {
-        printf("Usage: plurality [candidate ...]\n");
-        return 1;
+  // Until we reach either end of either L or M, pick larger among
+  // elements L and M and place them in the correct position at A[p..r]
+  while (i < n1 && j < n2) {
+    if (L[i] <= M[j]) {
+      arr[k] = L[i];
+      i++;
+    } else {
+      arr[k] = M[j];
+      j++;
     }
+    k++;
+  }
 
-    // Populate array of candidates
-    candidate_count = argc - 1;
-    if (candidate_count > MAX)
-    {
-        printf("Maximum number of candidates is %i\n", MAX);
-        return 2;
-    }
-    for (int i = 0; i < candidate_count; i++)
-    {
-        candidates[i].name = argv[i + 1];
-        candidates[i].votes = 0;
-    }
+  // When we run out of elements in either L or M,
+  // pick up the remaining elements and put in A[p..r]
+  while (i < n1) {
+    arr[k] = L[i];
+    i++;
+    k++;
+  }
 
-    int voter_count = get_int("Number of voters: ");
-
-    // Loop over all voters
-    for (int i = 0; i < voter_count; i++)
-    {
-        string name = get_string("Vote: ");
-
-        // Check for invalid vote
-        if (!vote(name))
-        {
-            printf("Invalid vote.\n");
-        }
-    }
-
-    // Display winner of election
-    print_winner();
+  while (j < n2) {
+    arr[k] = M[j];
+    j++;
+    k++;
+  }
 }
 
-// Update vote totals given a new vote
-bool vote(string name)
-{
-    // TODO
-    return false;
+// Divide the array into two subarrays, sort them and merge them
+void mergeSort(int arr[], int l, int r) {
+  if (l < r) {
+
+    // m is the point where the array is divided into two subarrays
+    int m = l + (r - l) / 2;
+
+    mergeSort(arr, l, m);
+    mergeSort(arr, m + 1, r);
+
+    // Merge the sorted subarrays
+    merge(arr, l, m, r);
+  }
 }
 
-// Print the winner (or winners) of the election
-void print_winner(void)
-{
-    // TODO
-    return;
+// Print the array
+void printArray(int arr[], int size) {
+  for (int i = 0; i < size; i++)
+    printf("%d ", arr[i]);
+  printf("\n");
 }
 
+// Driver program
+int main() {
+  int arr[] = {6, 5, 12, 10, 9, 1};
+  int size = sizeof(arr) / sizeof(arr[0]);
+
+  mergeSort(arr, 0, size - 1);
+
+  printf("Sorted array: \n");
+  printArray(arr, size);
+}
