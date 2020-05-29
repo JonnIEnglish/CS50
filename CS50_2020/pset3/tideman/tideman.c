@@ -99,28 +99,55 @@ int main(int argc, string argv[])
 // Update ranks given a new vote
 bool vote(int rank, string name, int ranks[])
 {
-    // TODO
+    for(int i = 0; i < candidate_count; i++)
+    {
+        if(name == candidates[i])
+        {
+            ranks[rank] = name;
+        }
+    }
     return false;
 }
 
 // Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
-    // TODO
+    for(int i = 0; i < candidate_count; i++)
+    {
+        for(int j = 0; j < candidate_count; j++)
+        {
+            if(ranks[i] > ranks[j])
+            {
+                preferences[i][j] += 1;
+            }
+        }
+    }
     return;
 }
 
 // Record pairs of candidates where one is preferred over the other
 void add_pairs(void)
 {
-    // TODO
+    for (int i = 0; i < candidate_count; i ++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if(preferences[i][j] > 0)
+            {
+             pairs[pair_count].winner = i;
+             pairs[pair_count].loser = j;
+
+             pair_count ++;
+            }
+        }
+    }
     return;
 }
 
 // Sort pairs in decreasing order by strength of victory
 void sort_pairs(void)
 {
-    // TODO
+    
     return;
 }
 
