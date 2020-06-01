@@ -103,7 +103,7 @@ bool vote(int rank, string name, int ranks[])
     {
         if(name == candidates[i])
         {
-            ranks[rank] = name;
+            ranks[rank] = i;
         }
     }
     return false;
@@ -147,7 +147,25 @@ void add_pairs(void)
 // Sort pairs in decreasing order by strength of victory
 void sort_pairs(void)
 {
-    
+    int w1, l1, w2, l2;
+    pair temp;
+
+    for(int i = 0; i < pair_count; i++)
+    {
+        for(int j = i; j < pair_count; j++)
+        {
+            w1 = pairs[i].winner;
+            l1 = pairs[i].loser;
+            w2 = pairs[j].winner;
+            l2 = pairs[j].loser;
+            if(preferences[w1][l1] < preferences[w2][l2])
+            {
+                temp = pairs[i];
+                pairs[i] = pairs[j];
+                pairs[j] = temp;
+            }
+        }
+    }
     return;
 }
 
